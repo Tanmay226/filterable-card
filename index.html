@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Filterable cards</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Font Awesome 6 Free -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .filter-buttons {
+          text-align: center;
+    margin-bottom: 20px;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        background-color: #73176e;
+          color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 16px;
+    min-width: 70px;
+    margin: 0 ;
+    cursor: pointer;
+    border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+        background-color: #281638;
+    }
+    .filter-select select {
+    padding: 9px 12px;
+    width: 100%;
+    max-width: 180px;
+    margin-left: auto;
+    display: block;
+    border-radius: 5px;
+    font-size: 16px;
+    border-color: #ccc;
+}
+.filter-select select option:hover{
+    background: #73176e;
+    color: #fff;
+}
+
+    #reset-filters {
+        border: none;
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 600;
+        outline: none;
+        color: #281638;
+            background: transparent;
+    }
+
+  .filter-search {
+      margin-bottom: 10px;
+    position: relative;
+    max-width: 250px;
+}
+
+.filter-search input {
+      padding:5px 40px 5px 17px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 100%;
+}
+
+.filter-search::before {
+      content: "\f002";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: auto;
+    right: 17px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #281638;
+    font-size: 18px;
+}
+    .filter-cards {
+    display: grid;
+    grid-template-columns: repeat(4 , 1fr);
+    gap: 20px;
+    align-items: center;
+}
+
+.filter-cards .fl-card {
+    padding: 12px;
+    border: 1px solid #8080807a;
+    border-radius: 8px;
+}
+
+    @media (max-width:1024px) {
+        .filter-buttons {
+            gap: 10px;
+        }
+    }
+  @media (max-width: 570px) {
+        .filter-card-sec .row> div + div.col-md-6 {
+    order: -2;
+}
+
+.filter-card-sec .row> div + div.col-md-6 + div {
+    order: -1;
+}
+
+.filter-btn {
+    padding: 5px 9px;
+    font-size: 14px;
+    min-width: 62px;
+}
+
+.filter-select select {
+    max-width: 100%;
+    font-size: 14px;
+    padding: 5px 11px;
+}
+
+.filter-buttons {
+    margin: 0;
+}
+
+.filter-search input {
+    font-size: 14px;
+}
+
+.filter-search {
+    max-width: 100%;
+    margin-bottom: 7px;
+}
+
+.filter-search::before {
+    top: 50%;
+    font-size: 14px;
+}
+    }
+
+    </style>
+</head>
+
+<body>
+    <section class="filter-card-sec py-5">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <!-- Keyword Search -->
+                    <div class="filter-search">
+                        <input type="text" id="search-input" placeholder="Search cards...">
+                    </div>
+                    <button id="reset-filters">
+                        Reset All
+                    </button>
+            
+                </div>
+                <div class="col-md-6">
+                    <!-- Filter Buttons -->
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="gr-a">Category A</button>
+                        <button class="filter-btn" data-filter="gr-b">Category B</button>
+                        <button class="filter-btn" data-filter="gr-c">Category C</button>
+                    </div>
+            
+                </div>
+                <!-- ./col-md-6 -->
+                <div class="col-md-3">
+            
+                    <!-- Select Dropdown Filter -->
+                    <div class="filter-select">
+                        <select id="category-select">
+                            <option value="all">All Languages</option>
+                            <option value="lan-one">English</option>
+                            <option value="lan-two">French</option>
+                            <option value="lan-three">Chinese</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <div class="col-md-12">
+                    <div class="filter-cards">
+                        <div class="fl-card lan-one gr-a">
+                            <h3>Card 1</h3>
+                            <p>Content for Category A</p>
+                        </div>
+            
+                        <div class="fl-card lan-one gr-b">
+                            <h3>Card 2</h3>
+                            <p>Content for Category B</p>
+                        </div>
+            
+            
+                        <div class="fl-card lan-one gr-c">
+                            <h3>Card 3</h3>
+                            <p>Content for Category C</p>
+                        </div>
+            
+            
+                        <div class="fl-card lan-two lan-one gr-a">
+                            <h3>Card 4</h3>
+                            <p>Content for Category A</p>
+                        </div>
+            
+            
+                        <div class="fl-card lan-two lan-one gr-a">
+                            <h3>Card 1</h3>
+                            <p>Content for Category A</p>
+                        </div>
+            
+                        <div class="fl-card lan-three lan-two gr-b">
+                            <h3>Card 2</h3>
+                            <p>Content for Category B</p>
+                        </div>
+            
+            
+                        <div class="fl-card lan-three gr-c">
+                            <h3>Card 3</h3>
+                            <p>Content for Category C</p>
+                        </div>
+            
+            
+                        <div class="fl-card lan-three gr-a">
+                            <h3>Card 4</h3>
+                            <p>Content for Category A</p>
+                        </div>
+            
+            
+                    </div>
+                    <!-- ./filter card box -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            class CardFilter {
+                constructor() {
+                    this.buttons = document.querySelectorAll(".filter-btn");
+                    this.cards = document.querySelectorAll(".fl-card");
+                    this.categorySelect = document.getElementById("category-select");
+                    this.searchInput = document.getElementById("search-input");
+                    this.resetButton = document.getElementById("reset-filters");
+    
+                    this.addEventListeners();
+                }
+    
+                addEventListeners() {
+                    this.buttons.forEach(button => {
+                        button.addEventListener("click", () => this.handleButtonClick(button));
+                    });
+    
+                    this.categorySelect.addEventListener("change", () => this.filterCards());
+                    this.searchInput.addEventListener("input", () => this.filterCards());
+                    this.resetButton.addEventListener("click", () => this.resetFilters());
+                }
+    
+                handleButtonClick(button) {
+                    this.buttons.forEach(btn => btn.classList.remove("active"));
+                    button.classList.add("active");
+                    this.filterCards();
+                }
+    
+                filterCards() {
+                    const activeFilter = document.querySelector(".filter-btn.active").getAttribute("data-filter");
+                    const selectedFilter = this.categorySelect.value.toLowerCase();
+                    const keyword = this.searchInput.value.trim().toLowerCase();
+    
+                    this.cards.forEach(card => {
+                        const cardCategory = card.classList.contains(activeFilter) || activeFilter === "all";
+                        const cardSelectMatch = card.classList.contains(selectedFilter) || selectedFilter === "all";
+                        const cardHeading = card.querySelector("h3").textContent.toLowerCase();
+                        const keywordMatch = keyword === "" || cardHeading.includes(keyword);
+    
+                        card.style.display = (cardCategory && cardSelectMatch && keywordMatch) ? "block" : "none";
+                    });
+                }
+    
+                resetFilters() {
+                    this.buttons.forEach(btn => btn.classList.remove("active"));
+                    document.querySelector(".filter-btn[data-filter='all']").classList.add("active");
+                    this.categorySelect.value = "all";
+                    this.searchInput.value = "";
+                    this.cards.forEach(card => card.style.display = "block");
+                }
+            }
+    
+            new CardFilter();
+        });
+    </script>
+</body>
+
+</html>
